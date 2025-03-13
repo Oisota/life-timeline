@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "life-timeline"
+version = "0.1.0"
+description = "Catalog life events and display them in a timeline"
+authors = ["Derek Morey <derek.o.morey@gmail.com>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+flask = "3.1.0"
+flask-login = "^0.6.3"
+python-dotenv = "^1.0.0"
+flask-wtf = "1.2.2"
+python-slugify = "^8.0.1"
+argon2-cffi = "^21.3.0"
+passlib = "^1.7.4"
+wtforms = "3.2.1"
+flask-sqlalchemy = "^3.1.1"
+flask-admin = "^1.6.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

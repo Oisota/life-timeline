@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="col">
+
+		{% include 'core/forms/event.html' %}
+
+		<div class="my-3">
+			{% for event in events %}
+			<p>{{event.timestamp | date_format }} {{ event.title }}: {{ event.description }}</p>
+			{% endfor %}
+		</div>
+
+	</div>
+</div>
+{% endblock %}

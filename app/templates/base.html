@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Derek Morey">
+		<meta name="description" content="{% block meta_description %}Life Timeline{% endblock %}">
+		<meta name="robots" content="index, follow">
+		<title>Life Timeline</title>
+		{% block styles %}
+		{% endblock %}
+		<link href="{{url_for('static', filename='vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+	</head>
+	<body data-bs-theme="dark">
+		{% include 'includes/navbar.html' %}
+
+		<main class="container">
+			{% block content %}
+			{% endblock %}
+		</main>
+
+		<script charset="utf-8" src="{{url_for('static', filename='vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js')}}"></script>
+		{% block scripts %}
+		{% endblock %}
+	</body>
+</html>
