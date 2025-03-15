@@ -3,6 +3,7 @@
 from typing import List
 from datetime import datetime
 from collections import defaultdict
+from itertools import groupby
 
 from app.exts.sqla import db
 from app.models import Event, User
@@ -14,10 +15,18 @@ def get_all_events(user: User) -> List[Event]:
     events = db.session.execute(stmt).scalars()
     return list(events)
 
-def generate_timeline(events: List[Event]) -> dict:
+def date_info(event):
+    dt = datetime.fromtimestamp(event.timestamp)
+    return dt.year, dt.month, dt.day
+
+def generate_timeline(events: List[Event]) -> List:
     """Generate tree timeline from event list
 
-    This assumes events is already ordered in reverse chronological order
+    Params
+    ------
+    events : List[Event]
+        The list of events to generate the timeline from. This list is assumed
+        to be sorted already. Otherwise the timeline will not generate properly.
     
     Given a list of events, we return a tree like this:
     [
@@ -27,26 +36,46 @@ def generate_timeline(events: List[Event]) -> dict:
                 {
                     'title': 'January',
                     'items': [
-                        {'title': '14', 'items': [events]}
+                        {
+                            'title': '14',
+                            'items': [events]
+                        }
                     ]
                 }
             ]
         }
     ]
-    Keys are year/month/day nested with the final layer being events on the day
     """
-    tree = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: [])))
-    tree = []
-    for event in events:
-        dt = datetime.fromtimestamp(event.timestamp)
-        year = str(dt.year)
-        month = str(dt.month)
-        day = str(dt.day)
+    if not events:
+        return []
 
-        current_year = year
-        while current_year == year:
+    by_year = lambda e: date_info(e)[0]
+    by_month = lambda e: date_info(e)[1]
+    by_day = lambda e: date_info(e)[2]
 
+    # I feel like this could be a recursive function somehow, idk
+    year_items = []
+    year_groups = groupby(events, by_year)
+    for year, year_group in year_groups:
+        month_items = []
+        month_groups = groupby(year_group, by_month)
+        for month, month_group in month_groups:
+            day_items = []
+            day_groups = groupby(month_group, by_day)
+            for day, day_group in day_groups:
+                day_items.append({
+                    'title': day,
+                    'items': list(day_group)
+                })
+            
+            month_items.append({
+                'title': month,
+                'items': day_items,
+            })
 
-        tree[year][month][day].append(event)
+        year_items.append({
+            'title': year,
+            'items': month_items,
+        })
 
-    return tree
+    return year_items

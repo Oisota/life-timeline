@@ -7,8 +7,31 @@
 		{% include 'core/forms/event.html' %}
 
 		<div class="my-3">
-			{% for event in events %}
-			<p>{{event.timestamp | date_format }} {{ event.title }}: {{ event.description }}</p>
+			<!-- ALL THE LOOPS!!!!!!!! -->
+			{% for year in years %}
+			<div class="mb-5">
+				<h1>{{ year.title}}</h1>
+				<hr>
+				{% for month in year['items'] %}
+				<h2>{{ month.title | month_name}}</h2>
+				{% for day in month['items'] %}
+				<div class="row mb-2">
+					<div class="col-1">
+						<h3 class="text-center">{{ day.title }}</h3>
+					</div>
+					<div class="col-11">
+						<ul class="list-group">
+							{% for event in day['items'] %}
+							<li class="list-group-item">
+								<span class="fw-bold">{{ event.title }}:</span> {{ event.description }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				{% endfor %}
+				{% endfor %}
+			</div>
 			{% endfor %}
 		</div>
 

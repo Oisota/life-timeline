@@ -1,3 +1,5 @@
+RUN := uv run
+
 .PHONY: start
 start:
-	flask run --host=0.0.0.0
+	$(RUN) flask run --host=0.0.0.0

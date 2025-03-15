@@ -8,18 +8,14 @@ from app.util import render
 from app.models import Event
 from app.exts.sqla import db
 from .forms import EventForm
-#from app.services.event import generate_timeline
+from app.services.event import generate_timeline, get_all_events
 
 log = logging.getLogger(__name__)
 
 @login_required
 def home():
-    stmt = db.select(Event) \
-        .where(Event.user_id == current_user.id) \
-        .order_by(Event.timestamp.desc())
-    events = db.session.execute(stmt).scalars()
-    events = list(events)
-    #tree = generate_timeline(events)
+    events = get_all_events(current_user)
+    years = generate_timeline(events)
     form = EventForm()
 
     if form.validate_on_submit():
@@ -41,7 +37,6 @@ def home():
         return redirect(url_for('core.home'))
     return render('core/index.html', {
         'title': 'Home',
-        'events': events,
-        #'tree': tree,
+        'years': years,
         'form': form,
     })
