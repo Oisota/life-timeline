@@ -11,7 +11,7 @@
         </li>
       </ul>
 			{% if current_user.is_authenticated %}
-			<button class="btn btn-outline-success" type="button">Logout</button>
+			<a href="{{ url_for('auth.logout') }}" class="btn btn-outline-success">Logout</a>
 			{% endif %}
     </div>
   </div>

@@ -19,7 +19,7 @@ class User(db.Model):
     email: Mapped[str]
     password_hash: Mapped[str]
     events: Mapped[List["Event"]] = relationship(
-        back_populates="user", cascade="all, delete-orphan"
+        back_populates="user", cascade="all, delete-orphan", init=False
     )
 
     @property

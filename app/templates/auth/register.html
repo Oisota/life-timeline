@@ -5,7 +5,7 @@
 	<div class="col-xl-6 offset-xl-3">
 
 		<h1 class="mt-2">{{title}}</h1>
-		<form action="{{ url_for('auth.login') }}" method="POST">
+		<form action="{{ url_for('auth.register') }}" method="POST">
 			{{ form.csrf_token }}
 			<div class="mb-3">
 				{{ form.email.label(class_='form-label') }}
@@ -15,10 +15,19 @@
 				{{ form.password.label(class_='form-label') }}
 				{{ form.password(class_='form-control', placeholder='Password')}}
 			</div>
+			<div class="mb-3">
+				{{ form.confirm_password.label(class_='form-label') }}
+				{{ form.confirm_password(class_='form-control', placeholder='Confirm Password')}}
+				{% if form.confirm_password.errors %}
+    		<div class="errors">
+					{% for error in form.confirm_password.errors %}
+					<p class="text-danger">{{ error }}</p>
+					{% endfor %}
+				</div>
+				{% endif %}
+			</div>
 			<input type="submit" class="btn btn-primary" value="Submit">
 		</form>
-
-		<p class="mt-5">Don't have an account? Click <a href="{{ url_for('auth.register') }}">here</a> to register.</p>
 
 	</div>
 </div>

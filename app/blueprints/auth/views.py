@@ -2,8 +2,8 @@ from flask import redirect, url_for, flash, request, abort, redirect
 from flask_login import login_user, logout_user, login_required
 
 from app.util import render, url_has_allowed_host_and_scheme
-from app.services.user import validate_credentials
-from .forms import LoginForm
+from app.services.user import validate_credentials, add_user
+from .forms import LoginForm, RegisterForm
 
 def login():
     form = LoginForm()
@@ -26,6 +26,20 @@ def login():
         'title': 'Login',
         'form': form
     })
+
+def register():
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        add_user(form.data['email'], form.data['password'])
+        flash('Account created, you may now log in.')
+        return redirect(url_for('auth.login'))
+
+    return render('auth/register.html', {
+        'title': 'Register',
+        'form': form,
+    })
+        
 
 @login_required
 def logout():
