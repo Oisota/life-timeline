@@ -1,11 +1,10 @@
 """SQLAlchemy DB Models"""
 from typing import List
-from datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Table, Column, ForeignKey, event
+from sqlalchemy import ForeignKey
 
-from app.exts.sqla import db, Base
+from app.exts.sqla import db
 
 class Migrations(db.Model):
     """Dbmate migrations"""

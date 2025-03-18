@@ -1,4 +1,8 @@
 # TODO
 
-- able to input life events
-- display events in a reverse chron tree/list grouped by year/month/day
+- be able to edit events
+- save a date range event (in canada for 2 weeks, in florida for a week, etc)
+	- maybe do this with tagging each event in the series?
+- password reset
+- dockerize
+- ruff

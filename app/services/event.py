@@ -2,7 +2,6 @@
 
 from typing import List
 from datetime import datetime
-from collections import defaultdict
 from itertools import groupby
 
 from app.exts.sqla import db
