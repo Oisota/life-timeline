@@ -1,21 +1,15 @@
-{% from "core/macros.html" import render_errors %}
+{% from "macros.html" import form_field %}
 
 <form action="{{ url_for('core.home') }}" method="POST">
 	{{ form.csrf_token }}
 	<div class="mb-3">
-		{{ form.date.label(class_="form-label") }}
-		{{ form.date(class_="form-control") }}
-		{{ render_errors(form.date.errors) }}
+		{{ form_field(form.date) }}
 	</div>
 	<div class="mb-3">
-		{{ form.title.label(class_="form-label") }}
-		{{ form.title(class_="form-control") }}
-		{{ render_errors(form.title.errors) }}
+		{{ form_field(form.title) }}
 	</div>
 	<div class="mb-3">
-		{{ form.description.label(class_="form-label") }}
-		{{ form.description(class_="form-control", rows=3) }}
-		{{ render_errors(form.description.errors) }}
+		{{ form_field(form.description) }}
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>

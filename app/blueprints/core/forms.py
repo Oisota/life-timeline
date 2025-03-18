@@ -5,4 +5,4 @@ from wtforms import validators
 class EventForm(FlaskForm):
     date = DateField('Date', [validators.InputRequired()])
     title = StringField('Title', [validators.InputRequired()])
-    description = TextAreaField('Description', [validators.InputRequired()])
+    description = TextAreaField('Description', [validators.InputRequired()], render_kw={'rows': 3})

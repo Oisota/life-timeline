@@ -2,13 +2,11 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, ValidationError
 
 class LoginForm(FlaskForm):
-    email = EmailField()
-    password = PasswordField()
+    email = EmailField('Email')
+    password = PasswordField('Password')
 
-class RegisterForm(FlaskForm):
-    email = EmailField()
-    password = PasswordField()
-    confirm_password = PasswordField()
+class RegisterForm(LoginForm):
+    confirm_password = PasswordField('Confirm Password')
 
     def validate_confirm_password(self, field):
         if field.data != self.password.data:
