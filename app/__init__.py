@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from flask import Flask
@@ -8,6 +9,7 @@ from app.blueprints import register_blueprints
 from app.cli import register_cli
 from app.template_setup import template_setup
 from app.errors import register_error_handlers
+
 
 def create_app():
     """App Factory"""

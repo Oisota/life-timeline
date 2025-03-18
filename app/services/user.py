@@ -3,9 +3,11 @@ from passlib.hash import argon2
 from app.exts.sqla import db
 from app.models import User
 
+
 def get_user(user_id):
     """Get a user by email"""
     return db.session.execute(db.select(User).where(User.id == user_id)).scalar()
+
 
 def add_user(email, password):
     """Add a user to the database"""
@@ -13,6 +15,7 @@ def add_user(email, password):
     user = User(email=email, password_hash=password_hash)
     db.session.add(user)
     db.session.commit()
+
 
 def validate_credentials(email, password):
     """Validate user email and password"""

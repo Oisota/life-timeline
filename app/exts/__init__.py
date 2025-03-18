@@ -1,8 +1,8 @@
-
 from .login import login_manager
 from .sqla import db
 from .csrf import csrf
 from .admin import admin
+
 
 def register_extensions(app):
     login_manager.init_app(app)

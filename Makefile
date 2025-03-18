@@ -6,4 +6,8 @@ start:
 
 .PHONY: lint
 lint:
-	$(RUN) ruff check
+	$(RUN) ruff check --fix
+
+.PHONY: format
+format:
+	$(RUN) ruff format

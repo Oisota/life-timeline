@@ -7,12 +7,16 @@ from itertools import groupby
 from app.exts.sqla import db
 from app.models import Event, User
 
+
 def get_all_events(user: User) -> List[Event]:
-    stmt = db.select(Event) \
-        .where(Event.user_id == user.id) \
+    stmt = (
+        db.select(Event)
+        .where(Event.user_id == user.id)
         .order_by(Event.timestamp.desc())
+    )
     events = db.session.execute(stmt).scalars()
     return list(events)
+
 
 def generate_timeline(events: List[Event]) -> List:
     """Generate tree timeline from event list
@@ -22,7 +26,7 @@ def generate_timeline(events: List[Event]) -> List:
     events : List[Event]
         The list of events to generate the timeline from. This list is assumed
         to be sorted already. Otherwise the timeline will not generate properly.
-    
+
     Given a list of events, we return a tree like this:
     [
         {
@@ -48,6 +52,7 @@ def generate_timeline(events: List[Event]) -> List:
     ]
     return _group(events, groupers)
 
+
 def _group(items: list, groupers: list):
     """
     Recursively group items from events list into a nested list structure
@@ -61,14 +66,8 @@ def _group(items: list, groupers: list):
     results = []
     for x, xg in groupby(items, groupers[0]):
         if len(groupers) == 1:
-            results.append({
-                'title': x,
-                'items': list(xg)
-            })
+            results.append({"title": x, "items": list(xg)})
         else:
-            results.append({
-                'title': x,
-                'items': _group(xg, groupers[1:])
-            })
+            results.append({"title": x, "items": _group(xg, groupers[1:])})
 
     return results

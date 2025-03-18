@@ -1,4 +1,5 @@
 """SQLAlchemy DB Models"""
+
 from typing import List
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -6,14 +7,18 @@ from sqlalchemy import ForeignKey
 
 from app.exts.sqla import db
 
+
 class Migrations(db.Model):
     """Dbmate migrations"""
-    __tablename__ = 'schema_migrations'
+
+    __tablename__ = "schema_migrations"
     version: Mapped[str] = mapped_column(primary_key=True)
+
 
 class User(db.Model):
     """User Model"""
-    __tablename__ = 'user'
+
+    __tablename__ = "user"
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     email: Mapped[str]
     password_hash: Mapped[str]
@@ -28,6 +33,7 @@ class User(db.Model):
     @property
     def is_active(self):
         return True
+
     @property
     def is_anonymous(self):
         return False
@@ -35,9 +41,11 @@ class User(db.Model):
     def get_id(self):
         return str(self.id)
 
+
 class Event(db.Model):
     """Post Model"""
-    __tablename__ = 'event'
+
+    __tablename__ = "event"
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     timestamp: Mapped[int] = mapped_column(nullable=False)
     title: Mapped[str] = mapped_column(nullable=False)

@@ -11,10 +11,10 @@ from app.models import (
 )
 from .sqla import db
 
-admin = Admin(name='Derek Blog', template_mode='bootstrap4')
+admin = Admin(name="Derek Blog", template_mode="bootstrap4")
+
 
 class AdminView(ModelView):
-
     column_display_pk = True
 
     def is_accessible(self):
@@ -22,7 +22,8 @@ class AdminView(ModelView):
 
     def inaccessible_callback(self, name, **kwargs):
         # redirect to login page if user doesn't have access
-        return redirect(url_for('login', next=request.url))
+        return redirect(url_for("login", next=request.url))
+
 
 admin.add_view(AdminView(User, db.session))
 admin.add_view(AdminView(Event, db.session))
