@@ -15,10 +15,6 @@ def get_all_events(user: User) -> List[Event]:
     events = db.session.execute(stmt).scalars()
     return list(events)
 
-def date_info(event):
-    dt = datetime.fromtimestamp(event.timestamp)
-    return dt.year, dt.month, dt.day
-
 def generate_timeline(events: List[Event]) -> List:
     """Generate tree timeline from event list
 
@@ -46,36 +42,34 @@ def generate_timeline(events: List[Event]) -> List:
         }
     ]
     """
-    if not events:
-        return []
+    groupers = [
+        lambda e: datetime.fromtimestamp(e.timestamp).year,
+        lambda e: datetime.fromtimestamp(e.timestamp).month,
+        lambda e: datetime.fromtimestamp(e.timestamp).day,
+    ]
+    return _group(events, groupers)
 
-    by_year = lambda e: date_info(e)[0]
-    by_month = lambda e: date_info(e)[1]
-    by_day = lambda e: date_info(e)[2]
+def _group(items: list, groupers: list):
+    """
+    Recursively group items from events list into a nested list structure
 
-    # I feel like this could be a recursive function somehow, idk
-    year_items = []
-    year_groups = groupby(events, by_year)
-    for year, year_group in year_groups:
-        month_items = []
-        month_groups = groupby(year_group, by_month)
-        for month, month_group in month_groups:
-            day_items = []
-            day_groups = groupby(month_group, by_day)
-            for day, day_group in day_groups:
-                day_items.append({
-                    'title': day,
-                    'items': list(day_group)
-                })
-            
-            month_items.append({
-                'title': month,
-                'items': day_items,
+    items: list - list of items to be grouped
+    groupers: list - list of functions to be passed as key funcs to groupby,
+        The length of the list determines how deep the tree will nest
+
+    Returns
+    """
+    results = []
+    for x, xg in groupby(items, groupers[0]):
+        if len(groupers) == 1:
+            results.append({
+                'title': x,
+                'items': list(xg)
+            })
+        else:
+            results.append({
+                'title': x,
+                'items': _group(xg, groupers[1:])
             })
 
-        year_items.append({
-            'title': year,
-            'items': month_items,
-        })
-
-    return year_items
+    return results
