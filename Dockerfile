@@ -12,4 +12,4 @@ RUN uv sync
 
 COPY . .
 
-CMD ["gunicorn", "-w", "4", "app.wsgi:application"]
+CMD ["uv", "run", "gunicorn", "app.wsgi:application"]
