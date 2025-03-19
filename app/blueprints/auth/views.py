@@ -1,8 +1,9 @@
-from flask import url_for, flash, request, abort, redirect
-from flask_login import login_user, logout_user, login_required
+from flask import abort, flash, redirect, request, url_for
+from flask_login import login_required, login_user, logout_user
 
+from app.services.user import add_user, validate_credentials
 from app.util import render, url_has_allowed_host_and_scheme
-from app.services.user import validate_credentials, add_user
+
 from .forms import LoginForm, RegisterForm
 
 

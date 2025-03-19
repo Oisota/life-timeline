@@ -4,8 +4,8 @@ from datetime import datetime
 
 import pytest
 
-from app.services.event import generate_timeline
 from app.models import Event
+from app.services.event import generate_timeline
 
 
 def evt_fac(dt):  # event factory

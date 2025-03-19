@@ -6,8 +6,12 @@ start:
 
 .PHONY: lint
 lint:
-	$(RUN) ruff check --fix
+	$(RUN) ruff check --select I --fix
 
 .PHONY: format
 format:
 	$(RUN) ruff format
+
+.PHONY: test
+test:
+	$(RUN) pytest

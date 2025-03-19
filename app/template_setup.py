@@ -1,7 +1,7 @@
 """Custom jinja template filters and context processors"""
 
-from datetime import datetime
 import calendar
+from datetime import datetime
 
 
 def template_setup(app):

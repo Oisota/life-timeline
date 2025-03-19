@@ -1,14 +1,15 @@
+"""Main app package"""
 from dotenv import load_dotenv
 
 load_dotenv()
 
 from flask import Flask
 
-from app.exts import register_extensions
 from app.blueprints import register_blueprints
 from app.cli import register_cli
-from app.template_setup import template_setup
 from app.errors import register_error_handlers
+from app.exts import register_extensions
+from app.template_setup import template_setup
 
 
 def create_app():

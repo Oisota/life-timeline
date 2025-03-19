@@ -1,14 +1,15 @@
 """Admin dashboard"""
 
-from flask import request, url_for, redirect
+from flask import redirect, request, url_for
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 
 from app.models import (
-    User,
     Event,
+    User,
 )
+
 from .sqla import db
 
 admin = Admin(name="Derek Blog", template_mode="bootstrap4")

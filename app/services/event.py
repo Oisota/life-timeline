@@ -1,8 +1,8 @@
 """Event Service"""
 
-from typing import List
 from datetime import datetime
 from itertools import groupby
+from typing import List
 
 from app.exts.sqla import db
 from app.models import Event, User

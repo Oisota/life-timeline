@@ -2,13 +2,14 @@ import logging
 from datetime import datetime
 
 from flask import redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user, login_required
 
-from app.util import render
-from app.models import Event
 from app.exts.sqla import db
-from .forms import EventForm
+from app.models import Event
 from app.services.event import generate_timeline, get_all_events
+from app.util import render
+
+from .forms import EventForm
 
 log = logging.getLogger(__name__)
 

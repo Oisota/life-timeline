@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-from .urls import register_urls
 from .cli import register_cli
+from .urls import register_urls
 
 bp = Blueprint("core", __name__)
 

@@ -1,7 +1,7 @@
+from .admin import admin
+from .csrf import csrf
 from .login import login_manager
 from .sqla import db
-from .csrf import csrf
-from .admin import admin
 
 
 def register_extensions(app):
