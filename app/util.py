@@ -1,3 +1,4 @@
+from urllib.parse import urlparse
 from flask import render_template
 
 
@@ -16,5 +17,11 @@ def render(template: str, data: dict = {}):
 
 def url_has_allowed_host_and_scheme(url, host):
     """Validate next url param"""
-    # TODO implement this
+    result = urlparse(url)
+    if result.hostname != host:
+        return False
+
+    if result.scheme != 'https':
+        return False
+
     return True
