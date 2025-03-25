@@ -1,11 +1,13 @@
+import logging
+
 from flask import abort, flash, redirect, request, url_for
 from flask_login import login_required, login_user, logout_user
 
 from app.services.user import add_user, validate_credentials
 from app.util import render, url_has_allowed_host_and_scheme
-
 from .forms import LoginForm, RegisterForm
 
+log = logging.getLogger(__name__)
 
 def login():
     form = LoginForm()
@@ -17,7 +19,8 @@ def login():
             flash("Logged in successfully")
 
             next_url = request.args.get("next")
-            if not url_has_allowed_host_and_scheme(next_url, request.host):
+            if next_url and not url_has_allowed_host_and_scheme(next_url, request.host):
+                log.warning(f'Next URL: {next_url} is not a valid redirect.')
                 return abort(400)
             return redirect(next_url or url_for("core.home"))
         else:
