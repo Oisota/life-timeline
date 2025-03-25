@@ -1,6 +1,6 @@
 {% from "macros.html" import form_field %}
 
-<form action="{{ url_for('core.home') }}" method="POST">
+<form id="event-form" action="{{ url_for('core.home') }}" method="POST">
 	{{ form.csrf_token }}
 	<div class="mb-3">
 		{{ form_field(form.date) }}
@@ -11,5 +11,4 @@
 	<div class="mb-3">
 		{{ form_field(form.description) }}
 	</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
 </form>

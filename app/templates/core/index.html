@@ -2,9 +2,11 @@
 
 {% block content %}
 <div class="row">
-	<div class="col">
+	<div class="col pt-2">
 
-		{% include 'core/forms/event.html' %}
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-event-modal">
+			New Event
+		</button>
 
 		<div class="my-3">
 			{% for year in years %}
@@ -21,8 +23,14 @@
 					<div class="col-11">
 						<ul class="list-group">
 							{% for event in day['items'] %}
-							<li class="list-group-item">
-								<span class="fw-bold">{{ event.title }}:</span> {{ event.description }}
+							<li class="list-group-item d-flex flex-row align-items-center justify-content-between">
+								<div>
+									<span class="fw-bold">{{ event.title }}:</span> {{ event.description }}
+								</div>
+								<div class="btn-group">
+									<button class="btn btn-sm btn-outline-warning" type="button">edit</button>
+									<button class="btn btn-sm btn-outline-danger" type="button">delete</button>
+								</div>
 							</li>
 							{% endfor %}
 						</ul>
@@ -37,3 +45,23 @@
 	</div>
 </div>
 {% endblock %}
+
+{% block modals %}
+<div class="modal fade" id="add-event-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+				{% include 'core/forms/event.html' %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<input type="submit" class="btn btn-primary" value="Submit" form="event-form"/>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock %}
